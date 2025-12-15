@@ -5,8 +5,8 @@ import { IntlProvider } from 'react-intl';
 import { AuthProvider } from './context/AuthContext';
 import AppRouter from './router/AppRouter';
 
-import fr from './i18n/fr.json';
-import en from './i18n/en.json';
+import fr from './lang/fr.json';
+import en from './lang/en.json';
 
 function App() {
   const [locale, setLocale] = useState<'fr' | 'en'>('fr');
