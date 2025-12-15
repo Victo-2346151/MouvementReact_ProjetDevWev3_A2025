@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+console.log('API_URL =', import.meta.env.VITE_API_URL);
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -69,11 +70,13 @@ export async function deleteMouvement(id: string) {
 // ===============================
 // LOGIN
 // ===============================
-export async function loginUser(userLogin: string, password: string) {
-  try {
-    const res = await api.post('/generatetoken', { userLogin, password });
-    return res.data.token;
-  } catch {
-    return null;
-  }
+export async function loginUser(email: string, password: string) {
+  const res = await api.post('/generatetoken', {
+    userLogin: {
+      email,
+      password,
+    },
+  });
+
+  return res.data.token;
 }

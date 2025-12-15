@@ -1,81 +1,56 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../api/api';
 
 type AuthContextType = {
+  token: string | null;
   isLoggedIn: boolean;
-  token: string;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 };
 
-export const AuthContext = createContext<AuthContextType>({
-  isLoggedIn: false,
-  token: '',
-  login: () => new Promise<boolean>(() => false),
-  logout: () => {},
-});
+const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    !!localStorage.getItem('token'),
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem('token'),
   );
 
-  const [token, setToken] = useState<string>(
-    localStorage.getItem('token') || '',
-  );
+  // ✅ dérivé automatiquement
+  const isLoggedIn = !!token;
 
-  const navigate = useNavigate();
-
-  async function login(email: string, password: string): Promise<boolean> {
+  const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/generatetoken',
-        {
-          userLogin: {
-            email,
-            password,
-          },
-        },
-      );
+      const token = await loginUser(email, password);
 
-      const jwt = response.data.token;
+      if (!token) return false;
 
-      if (jwt) {
-        setIsLoggedIn(true);
-        setToken(jwt);
-        localStorage.setItem('token', jwt);
-        navigate('/');
-        return true;
-      }
+      localStorage.setItem('token', token);
+      setToken(token);
 
-      setIsLoggedIn(false);
-      setToken('');
-      return false;
-    } catch {
-      setIsLoggedIn(false);
-      setToken('');
+      return true;
+    } catch (err) {
+      console.error('Erreur login:', err);
       return false;
     }
-  }
+  };
 
-  function logout() {
+  const logout = () => {
     localStorage.removeItem('token');
-    setToken('');
-    setIsLoggedIn(false);
-    navigate('/login');
-  }
+    setToken(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
+    <AuthContext.Provider value={{ token, isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
+export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>');
+  if (!ctx) {
+    throw new Error('useAuth must be used inside AuthProvider');
+  }
   return ctx;
-};
+}
