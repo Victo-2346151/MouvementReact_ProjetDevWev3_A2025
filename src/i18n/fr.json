@@ -1,0 +1,23 @@
+{
+  "app.title": "Gestion des mouvements",
+  "login.title": "Connexion",
+  "login.email": "Nom d'utilisateur",
+  "login.password": "Mot de passe",
+  "login.button": "Se connecter",
+  "logout": "Déconnexion",
+  "mouvements.list": "Liste des mouvements",
+  "mouvements.add": "Ajouter un mouvement",
+  "mouvements.edit": "Modifier un mouvement",
+
+  "add.title": "Ajouter un mouvement",
+  "edit.title": "Modifier un mouvement",
+
+  "form.reference": "Référence",
+  "form.quantite": "Quantité",
+  "form.produit": "Produit",
+  "form.entrepot": "Entrepôt",
+  "form.urgent": "Urgent",
+  "form.commentaire": "Commentaire",
+  "form.envoyer": "Envoyer",
+  "form.modifier": "Modifier"
+}

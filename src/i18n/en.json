@@ -1,0 +1,23 @@
+{
+  "app.title": "Movement Management",
+  "login.title": "Login",
+  "login.email": "Username",
+  "login.password": "Password",
+  "login.button": "Sign in",
+  "logout": "Logout",
+  "mouvements.list": "Movements list",
+  "mouvements.add": "Add movement",
+  "mouvements.edit": "Edit movement",
+
+  "add.title": "Add movement",
+  "edit.title": "Edit movement",
+
+  "form.reference": "Reference",
+  "form.quantite": "Quantity",
+  "form.produit": "Product",
+  "form.entrepot": "Warehouse",
+  "form.urgent": "Urgent",
+  "form.commentaire": "Comment",
+  "form.envoyer": "Send",
+  "form.modifier": "Update"
+}
