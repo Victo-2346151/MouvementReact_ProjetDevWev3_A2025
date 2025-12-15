@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { getMouvements, deleteMouvement } from '../api/api';
 
 interface IMouvement {
   _id: string;
@@ -21,32 +21,20 @@ export default function ListMouvementsPage() {
   >('all');
   const [urgent, setUrgent] = useState<'all' | 'oui' | 'non'>('all');
 
-  const { token } = useAuth();
-
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch('http://localhost:3000/api/mouvements', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        console.error('Erreur API :', res.status);
+      try {
+        const data = await getMouvements();
+        setMouvements(data);
+      } catch (err) {
+        console.error('Erreur API mouvements', err);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      const data = await res.json();
-
-      setMouvements(data.data);
-
-      setLoading(false);
     }
 
     fetchData();
-  }, [token]);
+  }, []);
 
   if (loading) {
     return (
@@ -131,14 +119,6 @@ export default function ListMouvementsPage() {
               <span className="font-semibold">Opération :</span>{' '}
               {m.typeOperation}
             </p>
-            <p className="text-gray-300">
-              <span className="font-semibold">Urgent :</span>{' '}
-              {m.urgent ? (
-                <span className="text-red-400 font-bold">Oui</span>
-              ) : (
-                'Non'
-              )}
-            </p>
 
             <div className="mt-6 flex gap-4">
               <Link
@@ -151,22 +131,8 @@ export default function ListMouvementsPage() {
               <button
                 onClick={async () => {
                   if (!confirm('Voulez-vous vraiment supprimer ?')) return;
-
-                  const res = await fetch(
-                    `http://localhost:3000/api/mouvements/${m._id}`,
-                    {
-                      method: 'DELETE',
-                      headers: {
-                        Authorization: `Bearer ${token}`,
-                      },
-                    },
-                  );
-
-                  if (res.ok) {
-                    setMouvements((prev) =>
-                      prev.filter((x) => x._id !== m._id),
-                    );
-                  }
+                  await deleteMouvement(m._id);
+                  setMouvements((prev) => prev.filter((x) => x._id !== m._id));
                 }}
                 className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 transition text-white font-semibold"
               >
