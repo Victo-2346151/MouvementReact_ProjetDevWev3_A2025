@@ -19,5 +19,26 @@
   "form.urgent": "Urgent",
   "form.commentaire": "Commentaire",
   "form.envoyer": "Envoyer",
-  "form.modifier": "Modifier"
+  "form.modifier": "Modifier",
+
+  "add.title": "Ajouter un mouvement",
+  "add.error.entrepot": "Veuillez sélectionner un entrepôt.",
+  "add.error.api": "Erreur lors de l’ajout du mouvement",
+
+  "fields.reference": "Référence",
+  "fields.typeOperation": "Type d’opération",
+  "fields.produit": "Produit",
+  "fields.entrepot": "Entrepôt",
+  "fields.entrepot.choose": "-- Choisir un entrepôt --",
+  "fields.quantite": "Quantité",
+  "fields.urgent": "Urgent",
+  "fields.dateOperation": "Date d’opération",
+  "fields.commentaire": "Commentaire",
+  "fields.tags": "Tags (séparés par des virgules)",
+
+  "type.entree": "Entrée",
+  "type.sortie": "Sortie",
+
+  "actions.add": "Ajouter",
+  "actions.cancel": "Annuler"
 }

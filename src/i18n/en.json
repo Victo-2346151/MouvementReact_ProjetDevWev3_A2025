@@ -19,5 +19,26 @@
   "form.urgent": "Urgent",
   "form.commentaire": "Comment",
   "form.envoyer": "Send",
-  "form.modifier": "Update"
+  "form.modifier": "Update",
+
+  "add.title": "Add movement",
+  "add.error.entrepot": "Please select a warehouse.",
+  "add.error.api": "Error while adding the movement",
+
+  "fields.reference": "Reference",
+  "fields.typeOperation": "Operation type",
+  "fields.produit": "Product",
+  "fields.entrepot": "Warehouse",
+  "fields.entrepot.choose": "-- Select a warehouse --",
+  "fields.quantite": "Quantity",
+  "fields.urgent": "Urgent",
+  "fields.dateOperation": "Operation date",
+  "fields.commentaire": "Comment",
+  "fields.tags": "Tags (comma separated)",
+
+  "type.entree": "Incoming",
+  "type.sortie": "Outgoing",
+
+  "actions.add": "Add",
+  "actions.cancel": "Cancel"
 }
