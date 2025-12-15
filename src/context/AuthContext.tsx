@@ -16,7 +16,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.getItem('token'),
   );
 
-  // ✅ dérivé automatiquement
   const isLoggedIn = !!token;
 
   const login = async (email: string, password: string): Promise<boolean> => {
