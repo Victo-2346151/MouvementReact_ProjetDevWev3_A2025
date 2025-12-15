@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { addMouvement } from '../api/api';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export default function AddMouvementPage() {
   const navigate = useNavigate();
+  const intl = useIntl();
 
   const [reference, setReference] = useState('');
   const [typeOperation, setTypeOperation] = useState('entree');
@@ -16,16 +16,19 @@ export default function AddMouvementPage() {
   const [dateOperation, setDateOperation] = useState('');
   const [commentaire, setCommentaire] = useState('');
   const [tags, setTags] = useState('');
-
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    // Validation simple
     if (!entrepot) {
-      setError('Veuillez sélectionner un entrepôt.');
+      setError(
+        intl.formatMessage({
+          id: 'add.error.entrepot',
+          defaultMessage: 'Veuillez sélectionner un entrepôt.',
+        }),
+      );
       return;
     }
 
@@ -43,11 +46,15 @@ export default function AddMouvementPage() {
 
     try {
       await addMouvement(mouvement);
-
       navigate('/');
     } catch (err) {
       console.error(err);
-      setError('Erreur lors de l’ajout du mouvement');
+      setError(
+        intl.formatMessage({
+          id: 'add.error.api',
+          defaultMessage: 'Erreur lors de l’ajout du mouvement',
+        }),
+      );
     }
   };
 
@@ -62,9 +69,13 @@ export default function AddMouvementPage() {
 
       <div className="bg-gray-800 w-full max-w-2xl p-8 rounded-lg shadow-xl border border-gray-700">
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5">
+          {/* Référence */}
           <div>
             <label htmlFor="reference" className="font-semibold">
-              Référence
+              <FormattedMessage
+                id="fields.reference"
+                defaultMessage="Référence"
+              />
             </label>
             <input
               id="reference"
@@ -76,9 +87,13 @@ export default function AddMouvementPage() {
             />
           </div>
 
+          {/* Type d’opération */}
           <div>
             <label htmlFor="typeOperation" className="font-semibold">
-              Type d’opération
+              <FormattedMessage
+                id="fields.typeOperation"
+                defaultMessage="Type d’opération"
+              />
             </label>
             <select
               id="typeOperation"
@@ -86,14 +101,19 @@ export default function AddMouvementPage() {
               onChange={(e) => setTypeOperation(e.target.value)}
               className="mt-1 p-2 w-full rounded bg-gray-700 border border-gray-600"
             >
-              <option value="entree">Entrée</option>
-              <option value="sortie">Sortie</option>
+              <option value="entree">
+                <FormattedMessage id="type.entree" defaultMessage="Entrée" />
+              </option>
+              <option value="sortie">
+                <FormattedMessage id="type.sortie" defaultMessage="Sortie" />
+              </option>
             </select>
           </div>
 
+          {/* Produit */}
           <div>
             <label htmlFor="produit" className="font-semibold">
-              Produit
+              <FormattedMessage id="fields.produit" defaultMessage="Produit" />
             </label>
             <input
               id="produit"
@@ -105,9 +125,13 @@ export default function AddMouvementPage() {
             />
           </div>
 
+          {/* Entrepôt */}
           <div>
             <label htmlFor="entrepot" className="font-semibold">
-              Entrepôt
+              <FormattedMessage
+                id="fields.entrepot"
+                defaultMessage="Entrepôt"
+              />
             </label>
             <select
               id="entrepot"
@@ -116,7 +140,12 @@ export default function AddMouvementPage() {
               className="mt-1 p-2 w-full rounded bg-gray-700 border border-gray-600"
               required
             >
-              <option value="">-- Choisir un entrepôt --</option>
+              <option value="">
+                <FormattedMessage
+                  id="fields.entrepot.choose"
+                  defaultMessage="-- Choisir un entrepôt --"
+                />
+              </option>
               <option value="Central">Central</option>
               <option value="Est">Est</option>
               <option value="Ouest">Ouest</option>
@@ -124,9 +153,13 @@ export default function AddMouvementPage() {
             </select>
           </div>
 
+          {/* Quantité */}
           <div>
             <label htmlFor="quantite" className="font-semibold">
-              Quantité
+              <FormattedMessage
+                id="fields.quantite"
+                defaultMessage="Quantité"
+              />
             </label>
             <input
               id="quantite"
@@ -139,6 +172,7 @@ export default function AddMouvementPage() {
             />
           </div>
 
+          {/* Urgent */}
           <div className="flex items-center gap-3">
             <input
               id="urgent"
@@ -148,13 +182,17 @@ export default function AddMouvementPage() {
               className="h-4 w-4 accent-red-500"
             />
             <label htmlFor="urgent" className="font-semibold">
-              Urgent
+              <FormattedMessage id="fields.urgent" defaultMessage="Urgent" />
             </label>
           </div>
 
+          {/* Date */}
           <div>
             <label htmlFor="dateOperation" className="font-semibold">
-              Date d’opération
+              <FormattedMessage
+                id="fields.dateOperation"
+                defaultMessage="Date d’opération"
+              />
             </label>
             <input
               id="dateOperation"
@@ -167,9 +205,13 @@ export default function AddMouvementPage() {
             />
           </div>
 
+          {/* Commentaire */}
           <div>
             <label htmlFor="commentaire" className="font-semibold">
-              Commentaire
+              <FormattedMessage
+                id="fields.commentaire"
+                defaultMessage="Commentaire"
+              />
             </label>
             <textarea
               id="commentaire"
@@ -180,9 +222,13 @@ export default function AddMouvementPage() {
             />
           </div>
 
+          {/* Tags */}
           <div>
             <label htmlFor="tags" className="font-semibold">
-              Tags (séparés par des virgules)
+              <FormattedMessage
+                id="fields.tags"
+                defaultMessage="Tags (séparés par des virgules)"
+              />
             </label>
             <input
               id="tags"
@@ -193,22 +239,24 @@ export default function AddMouvementPage() {
             />
           </div>
 
+          {/* Boutons */}
           <div className="flex gap-4 mt-6">
             <button
               type="button"
               onClick={() => navigate(-1)}
               className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 rounded-lg transition"
             >
-              Annuler
+              <FormattedMessage id="actions.cancel" defaultMessage="Annuler" />
             </button>
 
             <button
               type="submit"
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
             >
-              Ajouter
+              <FormattedMessage id="actions.add" defaultMessage="Ajouter" />
             </button>
           </div>
+
           {error && (
             <p className="text-red-400 text-center mt-4 font-semibold">
               {error}

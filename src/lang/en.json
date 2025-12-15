@@ -1,10 +1,15 @@
 {
   "app.title": "Movement Management",
+
   "login.title": "Login",
   "login.email": "Username",
   "login.password": "Password",
   "login.button": "Sign in",
   "logout": "Logout",
+
+  "nav.list": "List",
+  "nav.add": "Add",
+
   "mouvements.list": "Movements list",
   "mouvements.add": "Add movement",
   "mouvements.edit": "Edit movement",
@@ -12,18 +17,8 @@
   "add.title": "Add movement",
   "edit.title": "Edit movement",
 
-  "form.reference": "Reference",
-  "form.quantite": "Quantity",
-  "form.produit": "Product",
-  "form.entrepot": "Warehouse",
-  "form.urgent": "Urgent",
-  "form.commentaire": "Comment",
-  "form.envoyer": "Send",
-  "form.modifier": "Update",
-
-  "add.title": "Add movement",
-  "add.error.entrepot": "Please select a warehouse.",
-  "add.error.api": "Error while adding the movement",
+  "errors.entrepot.required": "Please select a warehouse.",
+  "errors.api.add": "Error while adding the movement",
 
   "fields.reference": "Reference",
   "fields.typeOperation": "Operation type",
@@ -40,5 +35,22 @@
   "type.sortie": "Outgoing",
 
   "actions.add": "Add",
-  "actions.cancel": "Cancel"
+  "actions.cancel": "Cancel",
+  "actions.save": "Save",
+  "actions.delete": "Delete",
+  "loading": "Loading...",
+  "filters.operation": "Operation",
+  "filters.urgent": "Urgent",
+  "filters.all": "All",
+  "filters.yes": "Yes",
+  "filters.no": "No",
+  "actions.edit": "Edit",
+  "edit.error.load": "Error while loading the movement",
+  "edit.error.futureDate": "The date cannot be in the future. Please fix it.",
+  "edit.error.api": "Error while updating the movement",
+  "menu.list": "List",
+  "menu.add": "Add",
+  "menu.logout": "Logout",
+
+  "confirm.delete": "Do you really want to delete this movement?"
 }

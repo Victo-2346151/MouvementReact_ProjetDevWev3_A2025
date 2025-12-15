@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { getMouvements, deleteMouvement } from '../api/api';
 
@@ -13,6 +13,8 @@ interface IMouvement {
 }
 
 export default function ListMouvementsPage() {
+  const intl = useIntl();
+
   const [mouvements, setMouvements] = useState<IMouvement[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +40,9 @@ export default function ListMouvementsPage() {
 
   if (loading) {
     return (
-      <p className="text-center text-gray-300 mt-20 text-xl">Chargement...</p>
+      <p className="text-center text-gray-300 mt-20 text-xl">
+        <FormattedMessage id="loading" defaultMessage="Chargement..." />
+      </p>
     );
   }
 
@@ -57,17 +61,15 @@ export default function ListMouvementsPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 py-10">
       <h1 className="text-4xl font-bold text-blue-400 mb-10 text-center">
-        <FormattedMessage
-          id="mouvements.list"
-          defaultMessage="Liste des mouvements"
-        />
+        <FormattedMessage id="mouvements.list" />
       </h1>
 
+      {/* Filtres */}
       <div className="max-w-4xl mx-auto mb-8 rounded-lg bg-gray-800 p-4 shadow">
         <div className="flex flex-wrap gap-6">
           <div>
             <label className="block mb-1 text-sm text-gray-400">
-              Opération
+              <FormattedMessage id="filters.operation" />
             </label>
             <select
               value={typeOperation}
@@ -76,14 +78,22 @@ export default function ListMouvementsPage() {
               }
               className="rounded bg-gray-700 px-3 py-2 text-white"
             >
-              <option value="all">Toutes</option>
-              <option value="entree">Entrée</option>
-              <option value="sortie">Sortie</option>
+              <option value="all">
+                <FormattedMessage id="filters.all" />
+              </option>
+              <option value="entree">
+                <FormattedMessage id="type.entree" />
+              </option>
+              <option value="sortie">
+                <FormattedMessage id="type.sortie" />
+              </option>
             </select>
           </div>
 
           <div>
-            <label className="block mb-1 text-sm text-gray-400">Urgent</label>
+            <label className="block mb-1 text-sm text-gray-400">
+              <FormattedMessage id="filters.urgent" />
+            </label>
             <select
               value={urgent}
               onChange={(e) =>
@@ -91,14 +101,21 @@ export default function ListMouvementsPage() {
               }
               className="rounded bg-gray-700 px-3 py-2 text-white"
             >
-              <option value="all">Tous</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
+              <option value="all">
+                <FormattedMessage id="filters.all" />
+              </option>
+              <option value="oui">
+                <FormattedMessage id="filters.yes" />
+              </option>
+              <option value="non">
+                <FormattedMessage id="filters.no" />
+              </option>
             </select>
           </div>
         </div>
       </div>
 
+      {/* Liste */}
       <div className="mx-auto max-w-6xl grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {mouvementsFiltres.map((m) => (
           <div
@@ -110,14 +127,31 @@ export default function ListMouvementsPage() {
             </h3>
 
             <p className="text-gray-300">
-              <span className="font-semibold">Produit :</span> {m.produit}
+              <strong>
+                <FormattedMessage id="fields.produit" /> :
+              </strong>{' '}
+              {m.produit}
             </p>
+
             <p className="text-gray-300">
-              <span className="font-semibold">Quantité :</span> {m.quantite}
+              <strong>
+                <FormattedMessage id="fields.quantite" /> :
+              </strong>{' '}
+              {m.quantite}
             </p>
+
             <p className="text-gray-300">
-              <span className="font-semibold">Opération :</span>{' '}
-              {m.typeOperation}
+              <strong>
+                <FormattedMessage id="fields.typeOperation" /> :
+              </strong>{' '}
+              <FormattedMessage id={`type.${m.typeOperation}`} />
+            </p>
+
+            <p className="text-gray-300">
+              <strong>
+                <FormattedMessage id="fields.urgent" /> :
+              </strong>{' '}
+              <FormattedMessage id={m.urgent ? 'filters.yes' : 'filters.no'} />
             </p>
 
             <div className="mt-6 flex gap-4">
@@ -125,18 +159,27 @@ export default function ListMouvementsPage() {
                 to={`/edit/${m._id}`}
                 className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 transition text-white font-semibold"
               >
-                Modifier
+                <FormattedMessage id="actions.edit" defaultMessage="Modifier" />
               </Link>
 
               <button
                 onClick={async () => {
-                  if (!confirm('Voulez-vous vraiment supprimer ?')) return;
+                  const confirmDelete = window.confirm(
+                    intl.formatMessage({
+                      id: 'confirm.delete',
+                      defaultMessage:
+                        'Voulez-vous vraiment supprimer ce mouvement ?',
+                    }),
+                  );
+
+                  if (!confirmDelete) return;
+
                   await deleteMouvement(m._id);
                   setMouvements((prev) => prev.filter((x) => x._id !== m._id));
                 }}
                 className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 transition text-white font-semibold"
               >
-                Supprimer
+                <FormattedMessage id="actions.delete" />
               </button>
             </div>
           </div>

@@ -1,10 +1,15 @@
 {
   "app.title": "Gestion des mouvements",
+
   "login.title": "Connexion",
   "login.email": "Nom d'utilisateur",
   "login.password": "Mot de passe",
   "login.button": "Se connecter",
   "logout": "Déconnexion",
+
+  "nav.list": "Liste",
+  "nav.add": "Ajouter",
+
   "mouvements.list": "Liste des mouvements",
   "mouvements.add": "Ajouter un mouvement",
   "mouvements.edit": "Modifier un mouvement",
@@ -12,18 +17,8 @@
   "add.title": "Ajouter un mouvement",
   "edit.title": "Modifier un mouvement",
 
-  "form.reference": "Référence",
-  "form.quantite": "Quantité",
-  "form.produit": "Produit",
-  "form.entrepot": "Entrepôt",
-  "form.urgent": "Urgent",
-  "form.commentaire": "Commentaire",
-  "form.envoyer": "Envoyer",
-  "form.modifier": "Modifier",
-
-  "add.title": "Ajouter un mouvement",
-  "add.error.entrepot": "Veuillez sélectionner un entrepôt.",
-  "add.error.api": "Erreur lors de l’ajout du mouvement",
+  "errors.entrepot.required": "Veuillez sélectionner un entrepôt.",
+  "errors.api.add": "Erreur lors de l’ajout du mouvement",
 
   "fields.reference": "Référence",
   "fields.typeOperation": "Type d’opération",
@@ -40,5 +35,22 @@
   "type.sortie": "Sortie",
 
   "actions.add": "Ajouter",
-  "actions.cancel": "Annuler"
+  "actions.cancel": "Annuler",
+  "actions.save": "Enregistrer",
+  "actions.delete": "Supprimer",
+  "loading": "Loading...",
+  "filters.operation": "Operation",
+  "filters.urgent": "Urgent",
+  "filters.all": "All",
+  "filters.yes": "Yes",
+  "filters.no": "No",
+  "actions.edit": "Edit",
+  "menu.list": "Liste",
+  "menu.add": "Ajouter",
+  "menu.logout": "Déconnexion",
+
+  "confirm.delete": "Do you really want to delete this movement?",
+  "edit.error.load": "Erreur lors du chargement du mouvement",
+  "edit.error.futureDate": "La date ne peut pas être dans le futur. Veuillez la corriger.",
+  "edit.error.api": "Erreur lors de la modification"
 }
