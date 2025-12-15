@@ -26,7 +26,7 @@ export default function EditMouvementPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const mouv = await getMouvementById(token!, id!);
+        const mouv = await getMouvementById(id!);
 
         setReference(mouv.reference);
         setTypeOperation(mouv.typeOperation);
@@ -75,7 +75,7 @@ export default function EditMouvementPage() {
     };
 
     try {
-      await updateMouvement(token!, id!, movementToSend);
+      await updateMouvement(id!, movementToSend);
       navigate('/');
     } catch (err) {
       console.error(err);

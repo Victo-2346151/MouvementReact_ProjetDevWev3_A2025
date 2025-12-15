@@ -1,12 +1,14 @@
 import axios from 'axios';
 
-// CONFIG AXIOS
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: API_URL,
 });
 
-// Ajouter automatiquement le token JWT
+// ===============================
+// INTERCEPTOR JWT
+// ===============================
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -15,27 +17,26 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// ===============================
 // API MOUVEMENTS
+// ===============================
 
 // GET tous les mouvements
-export async function getMouvements(token: string) {
+export async function getMouvements() {
   const res = await api.get('/mouvements');
-
   return res.data.data;
 }
 
 // GET par ID
-export async function getMouvementById(token: string, id: string) {
+export async function getMouvementById(id: string) {
   const res = await api.get(`/mouvements/${id}`);
-
   return res.data.data;
 }
 
 // POST ajouter
-export async function addMouvement(token: string, mouvement: any) {
+export async function addMouvement(mouvement: any) {
   try {
     const res = await api.post('/mouvements', mouvement);
-
     return res.data.data;
   } catch (err: any) {
     console.error('Erreur API Add :', err.response?.data || err);
@@ -44,14 +45,9 @@ export async function addMouvement(token: string, mouvement: any) {
 }
 
 // PUT modifier
-export async function updateMouvement(
-  token: string,
-  id: string,
-  mouvement: any,
-) {
+export async function updateMouvement(id: string, mouvement: any) {
   try {
     const res = await api.put(`/mouvements/${id}`, mouvement);
-
     return res.data.data;
   } catch (err: any) {
     console.error('Erreur API Update :', err.response?.data || err);
@@ -59,8 +55,8 @@ export async function updateMouvement(
   }
 }
 
-// supprimer
-export async function deleteMouvement(token: string, id: string) {
+// DELETE supprimer
+export async function deleteMouvement(id: string) {
   try {
     await api.delete(`/mouvements/${id}`);
     return true;
@@ -76,7 +72,6 @@ export async function deleteMouvement(token: string, id: string) {
 export async function loginUser(userLogin: string, password: string) {
   try {
     const res = await api.post('/generatetoken', { userLogin, password });
-
     return res.data.token;
   } catch {
     return null;

@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+
 import { addMouvement } from '../api/api';
 import { FormattedMessage } from 'react-intl';
 
 export default function AddMouvementPage() {
   const navigate = useNavigate();
-  const { token } = useAuth();
 
   const [reference, setReference] = useState('');
   const [typeOperation, setTypeOperation] = useState('entree');
@@ -43,7 +42,8 @@ export default function AddMouvementPage() {
     };
 
     try {
-      await addMouvement(token!, mouvement);
+      await addMouvement(mouvement);
+
       navigate('/');
     } catch (err) {
       console.error(err);

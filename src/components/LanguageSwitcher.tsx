@@ -1,5 +1,3 @@
-import { FormattedMessage } from 'react-intl';
-
 export default function LanguageSwitcher({
   setLocale,
 }: {
