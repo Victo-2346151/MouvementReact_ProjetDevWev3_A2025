@@ -76,7 +76,6 @@ export default function AddMouvementPage() {
             />
           </div>
 
-          {/* Type d’opération */}
           <div>
             <label htmlFor="typeOperation" className="font-semibold">
               Type d’opération

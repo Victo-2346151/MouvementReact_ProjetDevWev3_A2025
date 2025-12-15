@@ -39,7 +39,9 @@ export default function ListMouvementsPage() {
       }
 
       const data = await res.json();
-      setMouvements(data.mouvements);
+
+      setMouvements(data.data);
+
       setLoading(false);
     }
 
@@ -137,6 +139,7 @@ export default function ListMouvementsPage() {
                 'Non'
               )}
             </p>
+
             <div className="mt-6 flex gap-4">
               <Link
                 to={`/edit/${m._id}`}
